@@ -1,0 +1,48 @@
+// PUG template for David's methods page
+html
+  head
+    title= "Guitar Leraning Methods"
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
+  body
+    div(class="w3-container")
+      div(class="w3-container w3-black")
+        div(class="w3-bar")
+          button(style="width:30%;" class="w3-bar-item w3-button" onclick="window.location.href='/methods'")
+            h1(class="w3-left-align")= "Classical Guitar"
+            h2(class="w3-right-align")= "with open strings"
+
+        div(class="w3-bar")
+          a(href="ins-metodo.html" class="w3-bar-item w3-button w3-right")= "PT"
+          a(href="#" class="w3-bar-item w3-button w3-right")= "EN"
+    
+      div(class="w3-center")
+        div(class="w3-container w3-light-grey")
+          h3= "Registered Methods"
+
+        div(class="w3-right-align")
+          button(class="w3-center w3-black w3-btn w3-round-large" onclick="window.location.href='/methods/add'")= "Add +"
+    
+        table(class="w3-table-all" id="methods")
+          tr
+            th(class="w3-right")= "Counter"
+            th= ""
+            th= "Id"
+            th= "Method"
+            th= "Author"
+            th= "Date"
+          each meth in methList
+            tr(id="meth.id")
+              td(class="w3-right")= meth.likes
+              td
+                a(href="likes/"+meth.id)
+                  button(class="w3-center w3-border w3-btn w3-round-large")= "like"
+              td= meth.id
+              td
+                a(href=meth.url)= meth.name
+              td
+                a(href=meth.aurl)= meth.aname
+              td= meth.date
+
+      div(class="w3-container w3-black")
+        p= "By David Ramalho 2017"
