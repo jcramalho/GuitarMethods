@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
         answer = "user likes (" + ml[i-1].likes + ")"
         jf.writeFile("./models/methods.json", ml, function(err){
             if(err)
-              console.error(err)
+              console.log("Escrita no servidor: "+err)
             else
               console.log("Database updated!")
             ml.sort(aux.mySort('likes', true, parseInt))
