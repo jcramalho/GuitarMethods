@@ -22,8 +22,11 @@ router.get('/:id', (req, res) => {
     if(found)
     {
         answer = "user likes (" + ml[i-1].likes + ")"
-        jf.writeFile("./models/methods.json", ml, function(){
-            console.log("Database updated!")
+        jf.writeFile("./models/methods.json", ml, function(err){
+            if(err)
+              console.error(err)
+            else
+              console.log("Database updated!")
             ml.sort(aux.mySort('likes', true, parseInt))
         })
     }    
