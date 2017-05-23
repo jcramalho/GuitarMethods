@@ -1,42 +1,42 @@
-var express = require('express');
-var jf = require('jsonfile')
-var ml = require("../models/import.js")
+var express = require('express')
+
+//setting database
+var gmethods = require('../models/db-connect.js')
+
 var router = express.Router();
 
 /* GET methods page. */
 router.get('/', (req, res) => {
-    res.render('temp-methods', {methList: ml})
+    gmethods.find().then((docs) => {
+      res.render('temp-methods', {methList: docs})
+  })   
 })
 
 /* GET request to add a new method. */
 router.get('/add', (req, res) => {
-  res.render('temp-methods-add', {counter: ml.length+1})
+  gmethods.count().then((c) => {
+    res.render('temp-methods-add', {counter: c+1})
+  })
 })
 
 /* GET request to store information from form. */
 router.get('/store', (req, res) => {
-  ml.push(req.query)
-  jf.writeFile("./models/methods.json", ml, function(err){
-    if(err) console.error(err)
-    else console.log("Database updated!")
+  req.query.likes = Number(req.query.likes)
+  gmethods.insert(req.query).then((docs) => {
+    console.log(req.query.name + " inserted.")
+  }).catch((err) => {
+    console.log("Insertion error: " + err)
   })
   res.redirect("/methods")
 })
 
 /* GET method single page. */
 router.get('/:id', (req, res) => {
-    var i = 0
-    var found = false
-    while((i < ml.length)&&(!found))
-    {
-        if (ml[i].id==req.params.id)
-            found = true
-        i++
-    }
-    if(found)
-      res.render('temp-method', {m: ml[i-1]})
-    else
+    gmethods.findOne({id: req.params.id}).then((doc) => {
+      res.render('temp-method', {m: doc})
+    }).catch((err) => {
       res.render('temp-method-notfound')
+    })
 })
 
 module.exports = router;
