@@ -1,5 +1,23 @@
 //setting database
-const db = require('monk')('mongodb://jcr:car3118@ds149711.mlab.com:49711/guitar-methods')
-const gm = db.get('gmethods')
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://jcr:car3118@ds149711.mlab.com:49711/guitar-methods');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("We are connected to Mongo.")
+});
 
-module.exports = gm;
+var gmSchema = mongoose.Schema({
+    id: String,
+    date: String,
+    likes: Number,
+    name: String,
+    url: String,
+    aname: String,
+    aurl: String,
+    experience: String
+});
+
+var GMethod = mongoose.model('GMethod', gmSchema);
+
+module.exports = GMethod;

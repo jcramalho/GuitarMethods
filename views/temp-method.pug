@@ -22,7 +22,6 @@ html
     
         table(class="w3-table-all")
           tr
-            th= "Ranking"
             th= "#Likes"
             th= "Id"
             th= "Method"
@@ -30,8 +29,7 @@ html
             th= "Date"
           
           tr
-            td= "---"
-            td= "---"
+            td= m.likes
             td= m.id
             td
               a(href=m.url)= m.name
